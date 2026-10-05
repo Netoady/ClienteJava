@@ -1,19 +1,22 @@
+package src.menu;
+
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
-import java.util.Base64;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.io.IOException;
+
+import src.img.ImagemService;
 
 public class MenuCliente {
     private Scanner teclado;
     private Scanner entradaServidor;   // corresponde ao "e" no Cliente.java
     private PrintStream saidaServidor; // corresponde ao "ESCREVE_NO_SOCKET"
+    private ImagemService imagemService;
 
     public MenuCliente(Scanner teclado, Scanner entradaServidor, PrintStream saidaServidor) {
         this.teclado = teclado;
         this.entradaServidor = entradaServidor;
         this.saidaServidor = saidaServidor;
+        this.imagemService = new ImagemService();
     }
 
     public void iniciar() throws IOException {
@@ -40,6 +43,7 @@ public class MenuCliente {
                     enviarMensagem();
                     break;
                 case 0:
+                    saidaServidor.println("0"); // Avisa o servidor sobre o encerramento
                     System.out.println("SAINDO DO PROGRAMA!!!!!!");
                     break;
                 default:
@@ -59,19 +63,18 @@ public class MenuCliente {
     }
 
     private void enviarImg() throws IOException {
-        byte[] bytes = Files.readAllBytes(Paths.get("imagem.png"));
-        String base64 = Base64.getEncoder().encodeToString(bytes);
+        saidaServidor.println("4"); // Notifica o servidor que o envio de imagem será iniciado
+        String base64 = imagemService.converterParaBase64("imagem.png");
         saidaServidor.println(base64);
     }
 
     private void receberImg() throws IOException {
         String respostaBase64 = entradaServidor.nextLine();
-        byte[] imgBytes = Base64.getDecoder().decode(respostaBase64);
-        Files.write(Paths.get("imagem_recebida.png"), imgBytes);
+        imagemService.salvarBase64(respostaBase64, "imagem_recebida.png");
         System.out.println("IMG RECEBIDA COM SUCESSO!!!");
     }
 
-    private void realizarOperacao(int operacao){
+    private void realizarOperacao(int operacao) {
         System.out.print("Digite o primeiro número:");
         double n1 = Double.parseDouble(teclado.nextLine());
         System.out.print("Digite o segundo número:");
@@ -82,11 +85,11 @@ public class MenuCliente {
         System.out.println("Resultado: " + resposta);
     }
 
-    private void enviarMensagem(){
+    private void enviarMensagem() {
         System.out.print("Digite a mensagem:");
         String msg = teclado.nextLine();
 
-        saidaServidor.println(msg);
+        saidaServidor.println("5;" + msg); 
         String resposta = entradaServidor.nextLine();
         System.out.println("Servidor:" + resposta);
     }

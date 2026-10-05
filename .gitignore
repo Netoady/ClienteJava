@@ -1,0 +1,16 @@
+# Arquivos compilados do Java
+*.class
+bin/
+out/
+target/
+
+# Arquivos de IDEs
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+
+# Imagens geradas durante os testes dos clientes
+*_recebida.png
+imagem_recebida.png
