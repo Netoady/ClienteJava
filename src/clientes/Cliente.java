@@ -8,10 +8,10 @@ import java.util.Scanner;
 
 import src.menu.MenuCliente;
 
-public class Cliente3 {
+public class Cliente {
     public static void main(String[] args) throws UnknownHostException, IOException {
-        Socket clienteSocket = new Socket("?.?.?.?",12345);
-        System.out.println("[CLIENTE3] conectado");
+        Socket clienteSocket = new Socket("?.?.?.?", 12345);
+        System.out.println("[CLIENTE] conectado");
         Scanner teclado = new Scanner(System.in);
         Scanner e = new Scanner(clienteSocket.getInputStream());
         PrintStream ESCREVE_NO_SOCKET = new PrintStream(clienteSocket.getOutputStream());
