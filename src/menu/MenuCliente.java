@@ -30,18 +30,27 @@ public class MenuCliente {
                     case 1:
                         realizarOperacao(1);
                         break;
+
                     case 2:
                         realizarOperacao(2);
                         break;
+
                     case 3:
                         realizarOperacao(3);
                         break;
+
                     case 4:
+                        realizarOperacao(4);
+                        break;
+
+                    case 5:
                         solicitarEReceberImg();
                         break;
-                    case 5:
+
+                    case 6:
                         enviarMensagem();
                         break;
+
                     case 0:
                         saidaServidor.println("0"); // Avisa o servidor sobre o encerramento
                         System.out.println("SAINDO DO PROGRAMA!!!!!!");
@@ -60,14 +69,15 @@ public class MenuCliente {
         System.out.println("1 - OPÇÃO 1-(Somar)");
         System.out.println("2 - OPÇÃO 2-(Subtrair)");
         System.out.println("3 - OPÇÃO 3-(Multiplicar)");
-        System.out.println("4 - OPÇÃO 4-(Imagem Base64)");
-        System.out.println("5 - OPÇÃO 5-(Mensagem)");
+        System.out.println("4 - OPÇÃO 4-(Dividir)");
+        System.out.println("5 - OPÇÃO 5-(Imagem Base64)");
+        System.out.println("6 - OPÇÃO 6-(Mensagem)");
         System.out.println("0 - SAIR");
     }
 
     private void solicitarEReceberImg() throws IOException {
         // 1. Notifica o servidor que solicitou a imagem
-        saidaServidor.println("4");
+        saidaServidor.println("5");
         System.out.println("Solicitando imagem ao servidor...");
 
         // 2. Aguarda a resposta em Base64 enviada pelo servidor
@@ -98,7 +108,7 @@ public class MenuCliente {
         System.out.print("Digite a mensagem:");
         String msg = teclado.nextLine();
 
-        saidaServidor.println("5;" + msg); 
+        saidaServidor.println("6;" + msg); 
         String resposta = entradaServidor.nextLine();
         System.out.println("Servidor:" + resposta);
     }
